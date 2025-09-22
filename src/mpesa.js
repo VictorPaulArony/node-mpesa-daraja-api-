@@ -60,6 +60,28 @@ app.post('/api/c2b/pay', async (req, res) => {
     }
 });
 
+// Reversal Endpoint
+app.post('/api/reversal', async (req, res) => {
+    const { transactionID, amount, receiverParty, remarks } = req.body;
+
+    try {
+        const response = await initiateReversal(transactionID, amount, receiverParty, remarks);
+        res.json(response);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// URL Registration Endpoint
+app.post('/api/register/url', async (req, res) => {
+    try {
+        const response = await registerURL();
+        res.json(response);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Balance Inquiry Endpoint
 app.post('/api/balance/inquiry', async (req, res) => {
     try {
